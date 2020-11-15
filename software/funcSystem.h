@@ -3,12 +3,12 @@ void(* systemRestartNow) (void) = 0;
 void systemRestart() {
 
   // Notify
-  if(serialOutput) {
+  if(systemSerialOutput) {
     Serial.println("[SYST] Restarting...");
   }
 
   // Wait
-  delay(5000);
+  delay(systemRestartWait);
 
   // Restart
   systemRestartNow();
@@ -22,8 +22,8 @@ void systemBlink() {
   // Reset last blink after overflow
   if(systemBlinkLast > millis()) {
     systemBlinkLast = millis();
-    if(serialOutput) {
-      Serial.println("Reset last blink");
+    if(systemSerialOutput) {
+      Serial.println("[SYST] reset last blink timer due to overflow");
     }
   }
 
@@ -51,8 +51,8 @@ void setupSystem() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   // Serial output
-  if(serialOutput) {
-    Serial.begin(serialBaud);
+  if(systemSerialOutput) {
+    Serial.begin(systemSerialBaud);
     delay(250);
     Serial.println("[INFO] " + String(systemTitle) + " version " + String(systemVersion));
   }

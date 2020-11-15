@@ -29,7 +29,7 @@ void inputAnalog() {
     if(inputAnalogSensorState != inputAnalogList[inputAnalogSensorId].last_state) {
 
       // Publish change
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[INPT] analog input '" + inputAnalogList[inputAnalogSensorId].label + "' (" + inputAnalogList[inputAnalogSensorId].type + ") changed from '" + inputAnalogRanges[inputAnalogList[inputAnalogSensorId].last_state].label + "' to '" + inputAnalogRanges[inputAnalogSensorState].label + "'");
       }
       mqttPublish(inputAnalogList[inputAnalogSensorId].topic, inputAnalogRanges[inputAnalogSensorState].label, false, "analog input");
@@ -64,7 +64,7 @@ void inputDigital() {
     if(inputDigitalSensorState != inputDigitalList[inputDigitalSensorId].last_state) {
 
       // Publish change
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[INPT] digital input '" + inputDigitalList[inputDigitalSensorId].label + "' (" + inputDigitalList[inputDigitalSensorId].type + ") changed from '" + inputDigitalList[inputDigitalSensorId].last_state + "' to '" + inputDigitalSensorState + "'");
       }
       mqttPublish(inputDigitalList[inputDigitalSensorId].topic, inputDigitalSensorState, false, "digital input");

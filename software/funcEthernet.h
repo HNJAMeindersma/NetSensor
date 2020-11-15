@@ -1,11 +1,11 @@
 // Check ethernet connection
 void ethernetConnection() {
 
-  // Display ethernet hardware and link status
+  // Check ethernet hardware and link status
   if(Ethernet.linkStatus() != LinkON) {
 
     // Display information
-    if(serialOutput) {
+    if(systemSerialOutput) {
       Serial.print("[ETHR] failed to connect to ethernet");
       if(Ethernet.hardwareStatus() == EthernetNoHardware) {
         Serial.print(": hardware disconnected");
@@ -31,7 +31,7 @@ void ethernetDHCP() {
   // Reset last DHCP renew after overflow
   if(ethernetDHCPlast > millis()) {
     ethernetDHCPlast = millis();
-    if(serialOutput) {
+    if(systemSerialOutput) {
       Serial.println("[DHCP] reset last DHCP lease timer due to overflow");
     }
   }
@@ -41,7 +41,7 @@ void ethernetDHCP() {
 
     // Try ethernet DHCP renew
     byte ethernetDHCPresult = Ethernet.maintain();
-    if(serialOutput) {
+    if(systemSerialOutput) {
       if(ethernetDHCPresult == 0) {
         Serial.println("[DHCP] lease does not require updating");
       } else if(ethernetDHCPresult == 1) {
@@ -65,7 +65,7 @@ void ethernetDHCP() {
 // Setup ethernet
 void setupEthernet() {
 
-  if(serialOutput) {
+  if(systemSerialOutput) {
     Serial.print("[ETHR] connecting to ethernet with MAC '");
     Serial.print(String(ethernetMAC[0], HEX) + ":");
     Serial.print(String(ethernetMAC[1], HEX) + ":");
@@ -85,7 +85,7 @@ void setupEthernet() {
     ethernetDHCPlast = millis();
 
     // Display information
-    if(serialOutput) {
+    if(systemSerialOutput) {
       Serial.println("[ETHR] successfully connected to ethernet!");
       if(false) {
         Serial.print("  Local IP:    ");

@@ -5,7 +5,7 @@ bool mqttConnection() {
   if(mqttClient.connected() != true || mqttClient.state() != MQTT_CONNECTED) {
 
     // Display update
-    if(serialOutput) {
+    if(systemSerialOutput) {
       Serial.println("[MQTT] connecting to MQTT as client '" + String(mqttClientHost) + "' to broker '" + String(mqttServerHost) + "'...");
     }
 
@@ -13,7 +13,7 @@ bool mqttConnection() {
     if(mqttClient.connect(mqttClientHost)) {
 
       // MQTT connected
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[MQTT] successfully connected to MQTT!");
       }
       return true;
@@ -21,7 +21,7 @@ bool mqttConnection() {
     } else {
 
       // Display error
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.print("[MQTT] failed to connect");
         if(mqttClient.state() == MQTT_CONNECTION_TIMEOUT) {
           Serial.print(": connection timeout");
@@ -72,13 +72,13 @@ bool mqttPublish(char* topic, char* payload, bool retain = false, char* subject 
 
     // Publish MQTT message
     if(mqttClient.publish(topic, payload, retain)) {
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[MQTT] successfully published '" + String(subject) + "' (attempt " + (retries + 1) + ")");
       }
       sended = true;
       break;
     } else {
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[MQTT] failed to publish '" + String(subject) + "' (attempt " + (retries + 1) + ")");
       }
     }
@@ -93,7 +93,7 @@ bool mqttPublish(char* topic, char* payload, bool retain = false, char* subject 
   if(sended) {
     return true;
   } else {
-    if(serialOutput) {
+    if(systemSerialOutput) {
       Serial.println("[MQTT] dropped publication of '" + String(subject) + "' after " + retries + " attempts");
     }
     return false;
@@ -111,7 +111,7 @@ void mqttHeartbeat() {
     // Reset last heartbeat after overflow
     if(mqttHeartbeatLast > millis()) {
       mqttHeartbeatLast = millis();
-      if(serialOutput) {
+      if(systemSerialOutput) {
         Serial.println("[MQTT] reset last heartbeat timer due to overflow");
       }
     }
@@ -154,7 +154,7 @@ void mqttHeartbeat() {
       messagePayloadString += "\"Broker\":\"";
       messagePayloadString += mqttServerHost;
       messagePayloadString += "\",";
-      if(serialOutput == true) {
+      if(systemSerialOutput == true) {
         messagePayloadString += "\"Serial\":true,";
       } else {
         messagePayloadString += "\"Serial\":false,";

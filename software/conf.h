@@ -2,11 +2,9 @@
 const char*           systemTitle             = "NetSensor";                              // String
 const char*           systemVersion           = "1.0";                                    // String
 const unsigned long   systemBlinkTime         = 500;                                      // Millis
-// -------------------------------------------------------------------------------------- // #
-
-// Serial ------------------------------------------------------------------------------- // #
-const bool            serialOutput            = true;                                     // Boolean
-const int             serialBaud              = 9600;                                     // Number
+const unsigned long   systemRestartWait       = 5000;                                     // Millis
+const bool            systemSerialOutput      = true;                                     // Boolean
+const int             systemSerialBaud        = 9600;                                     // Number
 // -------------------------------------------------------------------------------------- // #
 
 // Ethernet ----------------------------------------------------------------------------- // #

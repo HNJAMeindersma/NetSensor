@@ -40,7 +40,7 @@ void loop() {
   // System LED blink
   systemBlink();
 
-  // Check ethernet connection
+  // Check ethernet status
   ethernetConnection();
 
   // Renew ethernet DHCP
